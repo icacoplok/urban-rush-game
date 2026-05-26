@@ -874,14 +874,14 @@ export class GameEngine {
     }
 
     // Camera follow - smooth chase camera
-    const camTargetX = this.playerGroup.position.x * 0.4;
-    const camTargetY = 5 + this.playerY * 0.4;
+    const camTargetX = this.playerGroup.position.x * 0.3;
+    const camTargetY = 5 + this.playerY * 0.3;
     this.camera.position.x += (camTargetX - this.camera.position.x) * 5 * dt;
     this.camera.position.y += (camTargetY - this.camera.position.y) * 5 * dt;
-    
-    // Slight camera tilt when switching lanes
-    const tiltTarget = (this.targetLane - 1) * -0.04;
-    this.camera.rotation.z += (tiltTarget - this.camera.rotation.z) * 3 * dt;
+    this.camera.position.z = 8; // Always behind player
+
+    // Keep camera looking at the right spot - this prevents any tilt
+    this.camera.lookAt(this.playerGroup.position.x * 0.2, 1.5, -10);
     
     // FOV increases with speed for sense of speed
     const targetFov = 65 + (this.speed - INITIAL_SPEED) * 0.3;
